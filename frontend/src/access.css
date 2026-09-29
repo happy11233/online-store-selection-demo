@@ -1,0 +1,49 @@
+/* Access and data integration pages follow the existing AIMID console palette. */
+.app-loading { min-height: 100vh; display: flex; align-items: center; justify-content: center; gap: 12px; color: #667085; font-size: 13px; }
+.user-pill { display: inline-flex; align-items: center; gap: 8px; color: #344054; font-size: 12px; font-weight: 600; }
+.logout-button { display: inline-flex; align-items: center; gap: 6px; border: 1px solid #eaecf0; border-radius: 6px; background: white; padding: 7px 10px; color: #475467; font-size: 11px; }
+.logout-button:hover { border-color: #f04438; color: #b42318; }
+.login-page { min-height: 100vh; display: grid; grid-template-columns: minmax(320px, 1fr) minmax(400px, 1fr); background: #fff; }
+.login-feature { min-height: 100vh; padding: clamp(32px, 5vw, 78px); display: flex; flex-direction: column; justify-content: space-between; color: #f9fafb; background: radial-gradient(circle at 85% 15%, #344054 0%, transparent 45%), linear-gradient(145deg, #101828 0%, #1d2939 60%, #101828 100%); }
+.login-brand { display: flex; align-items: center; gap: 12px; font-size: 19px; letter-spacing: .14em; }
+.login-brand .brand-mark { display: grid; place-items: center; margin: 0; width: 38px; height: 38px; }
+.login-kicker { color: #fda29b; letter-spacing: .18em; font-size: 11px; font-weight: 700; }
+.login-feature h1 { font-size: clamp(34px, 4.1vw, 58px); letter-spacing: -.04em; line-height: 1.24; margin: 18px 0; }
+.login-feature p { color: #d0d5dd; font-size: 14px; line-height: 1.7; }
+.login-foot { color: #98a2b3; font-size: 12px; }
+.login-panel { padding: 30px; display: grid; place-items: center; background: #f9fafb; }
+.login-card { width: min(100%, 420px); padding: clamp(26px, 3vw, 40px); border: 1px solid #eaecf0; border-radius: 14px; background: #fff; box-shadow: 0 20px 50px rgba(16, 24, 40, .07); }
+.login-icon { width: 48px; height: 48px; display: grid; place-items: center; color: #b42318; background: #fef3f2; border-radius: 12px; margin-bottom: 25px; }
+.login-card h2 { margin: 5px 0 6px; font-size: 25px; }
+.login-card > .muted { font-size: 12px; line-height: 1.6; }
+.login-card form, .account-form { display: grid; gap: 17px; margin: 25px 0 16px; }
+.login-card input, .account-form input, .account-form select { width: 100%; height: 40px; border: 1px solid #d0d5dd; border-radius: 6px; background: #fff; padding: 0 12px; color: #344054; }
+.login-card input:focus, .account-form input:focus, .account-form select:focus { border-color: #f04438; outline: 3px solid #fef3f2; }
+.login-card small { color: #98a2b3; font-size: 10px; }
+.source-notice { margin-bottom: 18px; padding: 12px 15px; color: #344054; background: #f0f9ff; border: 1px solid #b9e6fe; border-radius: 7px; font-size: 12px; }
+.source-grid, .account-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-bottom: 18px; }
+.source-card, .official-card, .account-card { padding: 24px; }
+.source-head, .source-actions, .official-bottom { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.source-icon { width: 38px; height: 38px; display: grid; place-items: center; color: #f04438; background: #fef3f2; border-radius: 9px; }
+.source-card h3 { margin: 16px 0 3px; font-size: 17px; }
+.source-card > .muted, .official-card > .muted { font-size: 11px; line-height: 1.7; }
+.source-facts { margin: 20px 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
+.source-facts div { min-width: 0; padding-top: 11px; border-top: 1px solid #f2f4f7; }
+.source-facts dt { color: #98a2b3; font-size: 10px; }
+.source-facts dd { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin: 6px 0 0; color: #344054; font-size: 11px; font-weight: 600; }
+.source-actions { justify-content: flex-start; flex-wrap: wrap; }
+.source-actions .btn { font-size: 11px; }
+.source-card > small { display: block; margin-top: 12px; }
+.official-card { margin-bottom: 18px; }
+.official-resources { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 18px 0; }
+.official-resources > div { display: flex; align-items: center; gap: 10px; padding: 13px; border: 1px solid #eaecf0; border-radius: 7px; background: #fcfcfd; }
+.official-resources strong { font-size: 12px; }.official-resources span { margin-left: auto; color: #667085; font-size: 10px; }
+.official-checklist { padding: 17px 20px; border: 1px solid #fef0c7; background: #fffcf5; border-radius: 8px; }
+.official-checklist h4 { display: flex; align-items: center; gap: 8px; margin: 0 0 10px; color: #b54708; font-size: 12px; }
+.official-checklist ol { margin: 0; padding-left: 20px; display: grid; gap: 6px; color: #7a2e0b; font-size: 11px; }
+.official-bottom { margin-top: 20px; }.official-bottom p { margin: 0; max-width: 60ch; color: #667085; font-size: 11px; line-height: 1.6; }
+.account-list > div { display: flex; align-items: center; gap: 10px; padding: 14px 0; border-bottom: 1px solid #f2f4f7; }
+.account-list strong { flex: 1; font-size: 12px; }.account-avatar { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 8px; color: #b42318; background: #fef3f2; font-size: 12px; font-weight: 700; }
+.account-form { margin-top: 18px; }.account-card:last-child { margin-bottom: 18px; }
+@media (max-width: 1050px) { .source-grid, .account-grid { grid-template-columns: 1fr; } .official-resources { grid-template-columns: 1fr; } }
+@media (max-width: 760px) { .login-page { grid-template-columns: 1fr; }.login-feature { min-height: 210px; padding: 24px; }.login-feature h1 { font-size: 25px; margin: 5px 0; }.login-feature p, .login-foot { display: none; }.login-panel { min-height: calc(100vh - 210px); padding: 20px; }.top-actions { gap: 8px; }.user-pill { font-size: 10px; }.user-pill .badge { display: none; }.logout-button { padding: 7px; font-size: 0; }.source-card, .official-card, .account-card { padding: 17px; }.official-bottom { flex-direction: column; align-items: flex-start; }.official-resources > div { flex-wrap: wrap; }.official-resources span { margin-left: 0; } }

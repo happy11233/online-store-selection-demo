@@ -1,0 +1,16 @@
+import React, { useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { UserPlus } from "lucide-react";
+import { Badge, Button, Card, Spinner } from "../components/ui";
+import { createUser, getUsers } from "../lib/api";
+
+const names = { admin: "管理员", operator: "运营", viewer: "观察员" };
+
+export default function UsersPage() {
+  const client = useQueryClient();
+  const [form, setForm] = useState({ username: "", password: "", role: "operator" });
+  const [notice, setNotice] = useState("");
+  const users = useQuery({ queryKey: ["auth-users"], queryFn: getUsers });
+  const create = useMutation({ mutationFn: createUser, onSuccess: () => { client.invalidateQueries({ queryKey: ["auth-users"] }); setForm({ username: "", password: "", role: "operator" }); setNotice("系统账号已创建"); }, onError: (error) => setNotice(error.response?.data?.detail || "创建失败") });
+  return <div className="content"><div className="page-intro"><div><p className="eyebrow">ACCESS CONTROL</p><h2>账号与权限</h2><p className="muted">管理员可维护系统账号；抖音平台授权单独管理。</p></div><Badge tone="gray">管理员专用</Badge></div><div className="account-grid"><Card className="account-card"><div className="section-heading"><div><p className="eyebrow">TEAM MEMBERS</p><h3>系统账号</h3></div><Badge tone="gray">{users.data?.data?.length ?? 0} 人</Badge></div><div className="account-list">{users.data?.data?.map((user) => <div key={user.id}><span className="account-avatar">{user.username.slice(0, 1).toUpperCase()}</span><strong>{user.username}</strong><Badge tone={user.role === "admin" ? "red" : "gray"}>{names[user.role]}</Badge></div>)}</div></Card><Card className="account-card"><div className="section-heading"><div><p className="eyebrow">ADD USER</p><h3>创建系统账号</h3></div><UserPlus size={18} /></div><form className="account-form" onSubmit={(event) => { event.preventDefault(); setNotice(""); create.mutate(form); }}><label className="form-field"><span>用户名</span><input required minLength={3} maxLength={40} autoComplete="off" value={form.username} onChange={(event) => setForm({ ...form, username: event.target.value })} /></label><label className="form-field"><span>密码 · 至少 12 位</span><input required minLength={12} type="password" autoComplete="new-password" value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} /></label><label className="form-field"><span>角色</span><select value={form.role} onChange={(event) => setForm({ ...form, role: event.target.value })}><option value="operator">运营：选品、回流与导出</option><option value="viewer">观察员：只读看板</option><option value="admin">管理员：规则、账号与数据源</option></select></label>{notice && <p className="form-success" role="status">{notice}</p>}<Button disabled={create.isPending} type="submit" className="full">{create.isPending ? <Spinner /> : <UserPlus size={14} />}创建账号</Button></form></Card></div><Card className="account-card"><div className="section-heading"><h3>权限矩阵</h3></div><div className="table-wrap"><table><thead><tr><th>角色</th><th>查看看板与数据源</th><th>AI 选品 / 回流 / 导出</th><th>规则与模拟同步</th><th>账号管理</th></tr></thead><tbody><tr><td>观察员</td><td>✓</td><td>—</td><td>—</td><td>—</td></tr><tr><td>运营</td><td>✓</td><td>✓</td><td>—</td><td>—</td></tr><tr><td>管理员</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr></tbody></table></div></Card></div>;
+}

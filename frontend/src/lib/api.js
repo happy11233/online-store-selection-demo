@@ -1,0 +1,46 @@
+import axios from "axios";
+
+const defaultBase = `http://${window.location.hostname}:8000/api`;
+export const api = axios.create({ baseURL: import.meta.env.VITE_API_BASE_URL || defaultBase, timeout: 20_000, withCredentials: true });
+let csrfToken = "";
+let sessionGeneration = 0;
+export const setCsrfToken = (value) => { csrfToken = value || ""; sessionGeneration += 1; };
+api.interceptors.request.use((config) => {
+  config._sessionGeneration = sessionGeneration;
+  if (["post", "put", "patch", "delete"].includes(config.method?.toLowerCase()) && csrfToken) config.headers["X-CSRF-Token"] = csrfToken;
+  return config;
+});
+api.interceptors.response.use((response) => response, (error) => {
+  if (error.response?.status === 401 && error.config?._sessionGeneration === sessionGeneration && !["/auth/login", "/auth/bootstrap"].includes(error.config?.url)) window.dispatchEvent(new Event("aimid:unauthorized"));
+  return Promise.reject(error);
+});
+export const getAuthStatus = () => api.get("/auth/status").then((res) => res.data);
+export const getMe = () => api.get("/auth/me").then((res) => res.data);
+export const login = (payload) => api.post("/auth/login", payload).then((res) => res.data);
+export const bootstrap = (payload) => api.post("/auth/bootstrap", payload).then((res) => res.data);
+export const logout = () => api.post("/auth/logout").then((res) => res.data);
+export const getUsers = () => api.get("/auth/users").then((res) => res.data);
+export const createUser = (payload) => api.post("/auth/users", payload).then((res) => res.data);
+export const getDataSources = () => api.get("/data-sources").then((res) => res.data);
+export const connectMockSource = (resource) => api.post(`/data-sources/${resource}/connect`).then((res) => res.data);
+export const syncMockSource = (resource) => api.post(`/data-sources/${resource}/sync`).then((res) => res.data);
+export const getDouyinStatus = () => api.get("/integrations/douyin/status").then((res) => res.data);
+export const requestDouyinAuthorization = () => api.post("/integrations/douyin/authorize").then((res) => res.data);
+export const getHotspots = () => api.get("/hotspots").then((res) => res.data);
+export const getHotspotTrends = (params = {}) => api.get("/hotspots/trends", { params }).then((res) => res.data);
+export const getRules = () => api.get("/rules").then((res) => res.data);
+export const updateRules = (payload) => api.put("/rules", payload).then((res) => res.data);
+export const recommend = (payload) => api.post("/recommendations", payload).then((res) => res.data);
+export const getProduct = (id) => api.get(`/products/${id}`).then((res) => res.data);
+export const getProducts = () => api.get("/products", { params: { limit: 200 } }).then((res) => res.data);
+export const getDataQuality = () => api.get("/data-quality").then((res) => res.data);
+export const getModels = () => api.get("/models").then((res) => res.data);
+export const createContentDraft = (payload) => api.post("/content-drafts", payload).then((res) => res.data);
+export const getFeedbackSummary = (params = {}) => api.get("/feedback/summary", { params }).then((res) => res.data);
+export const getFeedbackRecords = (params = {}) => api.get("/feedback/records", { params }).then((res) => res.data);
+export const getFeedbackTrends = (params = {}) => api.get("/feedback/trends", { params }).then((res) => res.data);
+export const submitFeedback = (payload) => api.post("/feedback", payload).then((res) => res.data);
+export const getLoopStatus = () => api.get("/loop/status").then((res) => res.data);
+export const getTrainingSnapshots = () => api.get("/loop/snapshots").then((res) => res.data);
+export const createTrainingSnapshot = (payload = {}) => api.post("/loop/snapshots", payload).then((res) => res.data);
+export const exportUrl = (hotspotId) => `${api.defaults.baseURL}/recommendations/export${hotspotId ? `?hotspot_id=${hotspotId}` : ""}`;

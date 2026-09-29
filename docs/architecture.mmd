@@ -1,0 +1,76 @@
+flowchart TB
+  subgraph S1[数据源层｜仅本地模拟数据]
+    DS[模拟适配器：商品与热点独立同步]
+    GATE[正式 API 受限入口：待授权和审批]
+    P[products.json\n商品 ID/标题/主图/价格/佣金/销量/退货/评分/类目/历史图文]
+    H[hotspots.json\n热点词/热度/描述/类目/上升速率]
+  end
+  subgraph S2[数据预处理层｜AI 开发]
+    C[去重、异常值裁剪、刷单过滤]
+    F[结构化特征\n佣金/退货/评分/销量增速]
+    T[文本特征\n商品标题/描述/热点文本]
+  end
+  subgraph S3[规则引擎层｜后端 + 运营配置]
+    R[佣金阈值/评分下限/退货上限/销量下限]
+  end
+  subgraph S4[AI 核心服务层｜AI 开发]
+    L[商品潜力打分\nDemo: LLM 模拟 0-100\nProd: LightGBM]
+    M[热点-商品语义匹配\nQwen 理由 + 图文选题]
+    V[多模态匹配\nDemo: 图片描述 + 文本相似度\nProd: CLIP/百炼多模态]
+  end
+  subgraph S5[业务应用层｜后端]
+    AUTH[系统登录：Argon2 + 会话 + CSRF + RBAC]
+    SYNC[手动模拟同步：校验 + 原子快照 + 来源标记]
+    API[FastAPI HTTP API]
+    DRAFT[图文草稿接口\n标题/分镜/风险提示]
+    DB[(Demo JSON\nProd MySQL)]
+    CACHE[(Prod Redis)]
+    JOB[Prod APScheduler\n定时同步商品/热点]
+    FB[模拟投放回流\n曝光/点击/成交/退款/事件去重]
+    SNAP[训练快照\nDemo JSON 持久化]
+  end
+  subgraph S6[展示层｜前端]
+    LOGIN[登录与账号权限页]
+    SOURCES[数据源接入页：模拟同步与正式状态]
+    UI[React + TailwindCSS + 基础组件\nReact Query + Axios]
+    TOPIC[热点趋势页\n观测热度与上涨速度]
+    WORK[选品工作台\n规则/AI榜单/选题/模型状态]
+    PERF[投放回流页\n曝光/点击/成交/GMV]
+  end
+  P --> DS
+  H --> DS
+  DS --> SYNC
+  SYNC --> DB
+  DB --> C
+  DB --> T
+  GATE -. 经审批后替换适配器 .-> DS
+  C --> F
+  C --> T
+  F --> R
+  T --> R
+  R --> L
+  R --> M
+  R --> V
+  L --> API
+  M --> API
+  V --> API
+  API <--> DB
+  API <--> CACHE
+  JOB --> DB
+  UI <--> API
+  UI --> LOGIN
+  UI --> SOURCES
+  LOGIN --> AUTH
+  AUTH --> API
+  SOURCES --> API
+  UI --> TOPIC
+  UI --> WORK
+  UI --> PERF
+  TOPIC -->|hotspot_id| WORK
+  WORK -->|product_id + hotspot_id| PERF
+  UI -->|修改阈值/一键选品| API
+  API --> FB
+  API --> DRAFT
+  DRAFT -->|图文内容草稿| UI
+  FB --> SNAP
+  SNAP -->|生产训练样本| L

@@ -1,0 +1,10 @@
+[
+  {"product_id":"P1002","hotspot_id":"H2002","impressions":18200,"clicks":1680,"orders":126,"revenue":5027.4,"recorded_at":"2026-09-22T10:30:00"},
+  {"product_id":"P1002","hotspot_id":"H2002","impressions":23600,"clicks":2290,"orders":188,"revenue":7491.2,"recorded_at":"2026-09-23T10:30:00"},
+  {"product_id":"P1002","hotspot_id":"H2002","impressions":28500,"clicks":2935,"orders":241,"revenue":9607.9,"recorded_at":"2026-09-24T10:30:00"},
+  {"product_id":"P1001","hotspot_id":"H2001","impressions":21400,"clicks":1568,"orders":92,"revenue":5500.8,"recorded_at":"2026-09-24T14:00:00"},
+  {"product_id":"P1004","hotspot_id":"H2003","impressions":19700,"clicks":1842,"orders":131,"revenue":15589.0,"recorded_at":"2026-09-25T10:30:00"},
+  {"product_id":"P1002","hotspot_id":"H2002","impressions":32600,"clicks":3618,"orders":318,"revenue":12688.2,"recorded_at":"2026-09-26T10:30:00"},
+  {"product_id":"P1004","hotspot_id":"H2003","impressions":26800,"clicks":2599,"orders":204,"revenue":24276.0,"recorded_at":"2026-09-27T10:30:00"},
+  {"product_id":"P1001","hotspot_id":"H2001","impressions":29400,"clicks":2430,"orders":171,"revenue":10230.9,"recorded_at":"2026-09-28T10:30:00"}
+]

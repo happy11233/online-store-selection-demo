@@ -1,0 +1,6 @@
+[
+  {"hotspot_id":"H2001","keyword":"夏日轻盈生活","heat_value":98.6,"description":"围绕夏季降温、轻食、通勤和居家整理的生活方式讨论。","category":"家居百货","rise_rate":0.24,"updated_at":"2026-09-28T09:00:00+08:00"},
+  {"hotspot_id":"H2002","keyword":"打工人高效午餐","heat_value":94.2,"description":"上班族关注低负担、方便快捷又有饱腹感的午餐解决方案。","category":"食品饮料","rise_rate":0.31,"updated_at":"2026-09-28T09:00:00+08:00"},
+  {"hotspot_id":"H2003","keyword":"换季维稳护肤","heat_value":91.8,"description":"换季期间敏感肌、保湿和成分精简成为讨论重点。","category":"美妆个护","rise_rate":0.18,"updated_at":"2026-09-28T09:00:00+08:00"},
+  {"hotspot_id":"H2004","keyword":"通勤装备升级","heat_value":87.5,"description":"职场人分享提升桌面效率、穿搭舒适度和移动办公体验的装备。","category":"数码","rise_rate":0.14,"updated_at":"2026-09-28T09:00:00+08:00"}
+]
